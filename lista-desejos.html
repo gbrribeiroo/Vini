@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Desejos 💛</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; min-height: 100vh; padding: 1.5rem 1rem 3rem; }
+  .container { max-width: 500px; margin: 0 auto; }
+  .header { margin-bottom: 1.5rem; }
+  .header h1 { font-size: 22px; font-weight: 600; color: #1a1a1a; }
+  .header p { font-size: 14px; color: #888; margin-top: 4px; }
+  .progress-wrap { background: #e0e0dc; border-radius: 99px; height: 6px; margin: 1rem 0 6px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 99px; background: #1D9E75; transition: width 0.4s ease; }
+  .progress-label { font-size: 13px; color: #888; margin-bottom: 1.5rem; }
+  .category { margin-bottom: 1.5rem; }
+  .category-title { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #aaa; margin-bottom: 8px; padding-left: 2px; }
+  .item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid #e8e8e5; border-radius: 14px; background: #fff; margin-bottom: 8px; cursor: pointer; transition: border-color 0.2s, background 0.2s; -webkit-tap-highlight-color: transparent; }
+  .item:active { background: #f9f9f7; }
+  .item.done { background: #f5f5f3; border-color: #e0e0dc; }
+  .checkbox { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid #ccc; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+  .item.done .checkbox { background: #1D9E75; border-color: #1D9E75; }
+  .checkmark { width: 13px; height: 13px; opacity: 0; transition: opacity 0.2s; }
+  .item.done .checkmark { opacity: 1; }
+  .item-info { flex: 1; min-width: 0; }
+  .item-name { font-size: 15px; font-weight: 500; color: #1a1a1a; transition: color 0.2s; }
+  .item.done .item-name { color: #aaa; text-decoration: line-through; }
+  .item-sub { font-size: 12px; color: #999; margin-top: 2px; }
+  .item.done .item-sub { color: #ccc; }
+  .link-btn { flex-shrink: 0; width: 34px; height: 34px; border-radius: 10px; border: 1px solid #e8e8e5; background: transparent; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #999; transition: background 0.2s; }
+  .link-btn:hover { background: #f5f5f3; color: #555; }
+  .link-btn svg { width: 16px; height: 16px; }
+  .confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+</style>
+</head>
+<body>
+<canvas class="confetti-canvas" id="confetti"></canvas>
+<div class="container">
+  <div class="header">
+    <h1>❤️ Lista de Desejos</h1>
+    <p>Tique o que já foi conquistado!</p>
+  </div>
+
+  <div class="progress-wrap"><div class="progress-fill" id="bar" style="width:0%"></div></div>
+  <div class="progress-label" id="prog">0 de 7 conquistados</div>
+
+  <div class="category">
+    <div class="category-title">⌚ Relógios</div>
+
+    <div class="item" onclick="toggle(this)" data-id="0">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 13 13" fill="none"><polyline points="2,7 5.5,10.5 11,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-info">
+        <div class="item-name">Relógio Technos Steel</div>
+        <div class="item-sub">Masculino · Couro legítimo · Prata/Preto</div>
+      </div>
+      <a class="link-btn" href="https://www.mercadolivre.com.br/relogio-technos-masculino-steel-couro-legitimo-prata-preto/up/MLBU3906462629" target="_blank" onclick="event.stopPropagation()" title="Ver no Mercado Livre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+
+    <div class="item" onclick="toggle(this)" data-id="1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 13 13" fill="none"><polyline points="2,7 5.5,10.5 11,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-info">
+        <div class="item-name">Relógio Vanglore Nexus</div>
+        <div class="item-sub">Masculino · Aço inox · 44mm · Prateado/Preto</div>
+      </div>
+      <a class="link-btn" href="https://www.mercadolivre.com.br/relogio-masculino-vanglore-nexus-prateado-visor-preto-aco-inox-grande-44mm/p/MLB51383941" target="_blank" onclick="event.stopPropagation()" title="Ver no Mercado Livre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+
+    <div class="item" onclick="toggle(this)" data-id="2">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 13 13" fill="none"><polyline points="2,7 5.5,10.5 11,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-info">
+        <div class="item-name">Relógio MLB61425816</div>
+        <div class="item-sub">Masculino · Mercado Livre</div>
+      </div>
+      <a class="link-btn" href="https://www.mercadolivre.com.br/p/MLB61425816" target="_blank" onclick="event.stopPropagation()" title="Ver no Mercado Livre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="category-title">🔧 Ferramentas</div>
+
+    <div class="item" onclick="toggle(this)" data-id="3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 13 13" fill="none"><polyline points="2,7 5.5,10.5 11,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-info">
+        <div class="item-name">Alicate Desencapador Gedore 8P</div>
+        <div class="item-sub">Eletricista · Automático</div>
+      </div>
+      <a class="link-btn" href="https://www.mercadolivre.com.br/alicate-eletricista-desencapador-fio-automatico-8p-gedore/up/MLBU1731329694" target="_blank" onclick="event.stopPropagation()" title="Ver no Mercado Livre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+
+    <div class="item" onclick="toggle(this)" data-id="4">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 13 13" fill="none"><polyline points="2,7 5.5,10.5 11,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-info">
+        <div class="item-name">Alicate de Pressão Gedore Red CRV 10"</div>
+        <div class="item-sub">R27210010 · Profissional</div>
+      </div>
+      <a class="link-btn" href="https://www.mercadolivre.com.br/alicate-de-presso-crv-10-r27210010-gedore-red/p/MLB27682388" target="_blank" onclick="event.stopPropagation()" title="Ver no Mercado Livre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+
+    <div class="item" onclick="toggle(this)" data-id="5">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 13 13" fill="none"><polyline points="2,7 5.5,10.5 11,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-info">
+        <div class="item-name">Maleta de Ferramentas Gedore Red</div>
+        <div class="item-sub">100 peças · Completa</div>
+      </div>
+      <a class="link-btn" href="https://www.mercadolivre.com.br/maleta-jogo-ferramentas-completa-gedore-red-100-pecas/up/MLBU3104910310" target="_blank" onclick="event.stopPropagation()" title="Ver no Mercado Livre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+
+    <div class="item" onclick="toggle(this)" data-id="6">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 13 13" fill="none"><polyline points="2,7 5.5,10.5 11,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-info">
+        <div class="item-name">Jogo de Ferramentas Gedore 4000D</div>
+        <div class="item-sub">69 peças · Robust · Preto</div>
+      </div>
+      <a class="link-btn" href="https://www.mercadolivre.com.br/jogo-ferramentas-com-69-pecas-robust-gedore-4000d-3370166-preto/p/MLB62101327" target="_blank" onclick="event.stopPropagation()" title="Ver no Mercado Livre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const TOTAL = 7;
+  let checked = [];
+  try { checked = JSON.parse(localStorage.getItem('wishlist') || '[]'); } catch(e){}
+
+  function restore() {
+    checked.forEach(id => {
+      const el = document.querySelector(`[data-id="${id}"]`);
+      if (el) el.classList.add('done');
+    });
+    updateProgress();
+  }
+
+  function toggle(el) {
+    const id = parseInt(el.dataset.id);
+    if (el.classList.contains('done')) {
+      el.classList.remove('done');
+      checked = checked.filter(x => x !== id);
+    } else {
+      el.classList.add('done');
+      checked.push(id);
+      if (checked.length === TOTAL) celebrate();
+    }
+    try { localStorage.setItem('wishlist', JSON.stringify(checked)); } catch(e){}
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const n = checked.length;
+    document.getElementById('bar').style.width = (n / TOTAL * 100) + '%';
+    document.getElementById('prog').textContent = `${n} de ${TOTAL} conquistado${n !== 1 ? 's' : ''}`;
+  }
+
+  function celebrate() {
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const pieces = Array.from({length: 90}, () => ({
+      x: Math.random() * canvas.width,
+      y: -10,
+      r: 4 + Math.random() * 6,
+      d: 2 + Math.random() * 3,
+      color: ['#1D9E75','#D85A30','#378ADD','#BA7517','#D4537E'][Math.floor(Math.random()*5)],
+      tilt: Math.random() * 10 - 5
+    }));
+    let frame = 0;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        p.y += p.d;
+        p.x += Math.sin(frame / 10) * p.tilt;
+      });
+      frame++;
+      if (frame < 150) requestAnimationFrame(draw);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    draw();
+  }
+
+  restore();
+</script>
+</body>
+</html>
